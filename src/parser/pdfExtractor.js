@@ -68,8 +68,9 @@ export async function extractTextFromPDF(file, onProgress) {
     pageTexts.push(`--- PÁGINA ${pageNum} ---\n${lineText}`);
   }
 
+  const rawText = pageTexts.join('\n\n');
   return {
-    text: pageTexts.join('\n\n'),
+    text: rejoinSplitWords(rawText),
     numPages,
     info,
   };
@@ -82,6 +83,27 @@ export async function extractTextFromPDF(file, onProgress) {
  * @param {Array<object>} items
  * @returns {string}
  */
+/**
+ * Repara palabras que PDF.js separa con espacios espurios
+ * (e.g. "correspond ientes" → "correspondientes", "202 5" → "2025").
+ */
+function rejoinSplitWords(text) {
+  return text
+    // Letra + espacio + letra minúscula dentro de una palabra: "correspond ientes" → "correspondientes"
+    .replace(/([a-záéíóúüñ]) ([a-záéíóúüñ]{1,3}) /gi, (m, a, b) => {
+      // Only rejoin if the fragment is ≤3 chars (likely a split, not two real words)
+      return a + b + ' ';
+    })
+    // Dígitos separados por espacio: "202 5" → "2025", "48 .485" → "48.485"
+    .replace(/(\d) (\d)/g, '$1$2')
+    // Número + espacio + punto/coma + dígitos: "48 .485" → "48.485"
+    .replace(/(\d) ([.,]\d)/g, '$1$2')
+    // Letras espaciadas tipo header: "P á g i n a" queda tal cual (demasiado corto cada fragmento)
+    // "d u r ac i ón" → intentar rejoin de letras sueltas separadas por espacios
+    .replace(/\b([a-záéíóúüñ]) ([a-záéíóúüñ]) ([a-záéíóúüñ]) /gi, '$1$2$3 ')
+    .replace(/\b([a-záéíóúüñ]) ([a-záéíóúüñ]) /gi, '$1$2 ');
+}
+
 function buildPageText(items) {
   if (!items.length) return '';
 

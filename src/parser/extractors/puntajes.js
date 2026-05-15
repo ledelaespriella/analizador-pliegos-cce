@@ -40,7 +40,7 @@ function extractPuntos(fragment) {
 /** Mapa de criterios estándar con alias, color y documentos habituales */
 const CRITERIOS_STD = [
   {
-    re: /OFERTA\s+ECON[OÓ]MICA/i,
+    re: /OFERTA\s+ECON[OÓ]\s*MI\s*CA/i,
     nombre: 'Oferta Económica',
     color: 'teal',
     puntosDefault: 48.5,
@@ -48,7 +48,7 @@ const CRITERIOS_STD = [
     documentos: 'Formulario de Oferta Económica, Análisis de Precios Unitarios (APU)',
   },
   {
-    re: /FACTOR\s+(?:DE\s+)?CALIDAD/i,
+    re: /FACTOR\s+(?:DE\s+)?CALI\s*DAD/i,
     nombre: 'Factor de Calidad',
     color: 'gold',
     puntosDefault: 30,
@@ -56,7 +56,7 @@ const CRITERIOS_STD = [
     documentos: 'Hojas de vida personal clave, soportes de formación y experiencia, plan de trabajo',
   },
   {
-    re: /APOYO\s+(?:A\s+LA\s+)?INDUSTRIA\s+NACIONAL/i,
+    re: /APOYO\s+(?:A\s+LA\s+)?INDUSTRIA\s+NACIO\s*NAL/i,
     nombre: 'Apoyo a la Industria Nacional',
     color: 'blue',
     puntosDefault: 20,
@@ -64,7 +64,7 @@ const CRITERIOS_STD = [
     documentos: 'Formulario de Industria Nacional, certificados de origen',
   },
   {
-    re: /VINCULACI[OÓ]N\s+(?:DE\s+)?PERSONAS\s+(?:CON\s+)?DISCAPACIDAD/i,
+    re: /VINCULACI[OÓ]N\s+(?:DE\s+)?PERSO\s*NAS\s+(?:CON\s+)?DISCAPA\s*CIDAD/i,
     nombre: 'Vinculación de Personas con Discapacidad',
     color: 'green',
     puntosDefault: 1,
@@ -91,8 +91,8 @@ const CRITERIOS_STD = [
 
 export function extractPuntajes(text) {
   const section = extractSection(text,
-    /CRITERIOS?\s+(?:DE\s+)?(?:EVALUACI[OÓ]N\s+)?PONDERABLES?|FACTORES?\s+PONDERABLES?/i,
-    /REQUISITOS?\s+HABILITANTES|CAP[IÍ]TULO\s+[IVX]+\s+\d|METODOLOG[IÍ]A\s+DE\s+EVALUACI[OÓ]N/i,
+    /CRITERIOS?\s+(?:DE\s+)?(?:EVALUACI[OÓ]N\s+)?PONDERABLES?|FACTORES?\s+PONDERABLES?|4\.1\s+OFERTA\s+ECON/i,
+    /REQUISITOS?\s+HABILITANTES|CAP[IÍ]TULO\s+[IVX]+\s+\d|METODOLOG[IÍ]A\s+DE\s+EVALUACI[OÓ]N|5\.\s+[A-Z]/i,
   ) || text;
 
   const resultados = [];
