@@ -1,7 +1,8 @@
 /**
- * pliegoParser.js
- * ---------------
- * Orquestador principal del análisis de pliegos.
+ * @file pliegoParser.js — Orquestador principal del analisis de pliegos.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
  *
  * Recibe el texto extraído del PDF y coordina todos los extractores
  * especializados, devolviendo un objeto JSON con la misma estructura

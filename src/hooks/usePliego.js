@@ -1,7 +1,10 @@
 /**
- * usePliego.js
- * ------------
- * Hook principal que gestiona el ciclo de vida del análisis:
+ * @file usePliego.js — Hook principal del ciclo de vida del analisis.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
+ * Gestiona el ciclo de vida del analisis:
  *  home → loading → dashboard | error
  *
  * Expone:

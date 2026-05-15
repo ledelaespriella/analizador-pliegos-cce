@@ -1,5 +1,8 @@
 /**
- * Utilidades de formateo para valores monetarios, fechas y texto.
+ * @file formatters.js — Utilidades de formateo para valores monetarios, fechas y texto.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
  */
 
 /**

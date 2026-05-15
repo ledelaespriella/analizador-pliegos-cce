@@ -1,4 +1,9 @@
-/** FinancieroTab — indicadores, capital de trabajo y capacidad residual. */
+/**
+ * @file FinancieroTab.jsx — Indicadores, capital de trabajo y capacidad residual.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ */
 import { fmtCOP } from '../../../utils/formatters.js';
 
 export default function FinancieroTab({ data }) {

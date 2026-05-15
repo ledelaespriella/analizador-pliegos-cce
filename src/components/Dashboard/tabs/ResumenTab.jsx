@@ -1,4 +1,9 @@
-/** ResumenTab — tabla con todos los campos del resumen ejecutivo. */
+/**
+ * @file ResumenTab.jsx — Tabla con todos los campos del resumen ejecutivo.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ */
 export default function ResumenTab({ data }) {
   const labels = {
     proceso:      'Número del Proceso',

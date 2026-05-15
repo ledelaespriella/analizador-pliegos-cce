@@ -1,5 +1,8 @@
 /**
- * LoadingScreen — pantalla de progreso durante el análisis del PDF.
+ * @file LoadingScreen.jsx — Pantalla de progreso durante el analisis del PDF.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
  */
 import { ANALYSIS_STEPS } from '../utils/constants.js';
 

@@ -1,8 +1,11 @@
 /**
- * checklist.js
- * ------------
+ * @file checklist.js — Genera el checklist de documentos para la oferta.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
  * Genera el checklist de documentos a presentar en la oferta,
- * cruzando los datos extraídos del pliego con la plantilla estándar CCE.
+ * cruzando los datos extraidos del pliego con la plantilla estandar CCE.
  *
  * El checklist se construye dinámicamente según:
  *  - Requisitos habilitantes detectados.

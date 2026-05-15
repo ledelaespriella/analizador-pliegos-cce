@@ -1,4 +1,9 @@
-/** ExperienciaTab — tablas de experiencia general y específica. */
+/**
+ * @file ExperienciaTab.jsx — Tablas de experiencia general y especifica.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ */
 export default function ExperienciaTab({ data }) {
   return (
     <div style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>

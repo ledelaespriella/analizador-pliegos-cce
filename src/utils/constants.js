@@ -1,5 +1,9 @@
 /**
- * Constantes globales del analizador de pliegos CCE.
+ * @file constants.js — Constantes globales del analizador de pliegos CCE.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
  * Centraliza textos, colores y configuraciones reutilizables.
  */
 

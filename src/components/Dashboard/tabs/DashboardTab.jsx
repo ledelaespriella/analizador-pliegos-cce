@@ -1,6 +1,8 @@
 /**
- * DashboardTab — vista general: gráfica de puntajes, parámetros clave,
- * documentos críticos y resumen de experiencia específica.
+ * @file DashboardTab.jsx — Vista general: grafica de puntajes, parametros clave.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
  */
 import { CHART_COLORS } from '../../../utils/constants.js';
 
