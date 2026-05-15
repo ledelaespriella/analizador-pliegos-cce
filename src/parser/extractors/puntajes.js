@@ -1,7 +1,10 @@
 /**
- * puntajes.js
- * -----------
- * Extrae los criterios de evaluación ponderables (puntaje) del pliego.
+ * @file puntajes.js — Extrae criterios de evaluacion ponderables del pliego.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
+ * Extrae los criterios de evaluacion ponderables (puntaje) del pliego.
  *
  * En pliegos tipo CCE los criterios más frecuentes son:
  *  - Oferta Económica

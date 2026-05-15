@@ -1,6 +1,9 @@
 /**
- * financiero.js
- * -------------
+ * @file financiero.js — Extrae indicadores financieros y capacidad residual.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
  * Extrae indicadores financieros, capital de trabajo y capacidad residual
  * del pliego de condiciones.
  *

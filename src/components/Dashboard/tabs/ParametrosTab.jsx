@@ -1,4 +1,9 @@
-/** ParametrosTab — parámetros clave con niveles de alerta. */
+/**
+ * @file ParametrosTab.jsx — Parametros clave con niveles de alerta.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ */
 export default function ParametrosTab({ data }) {
   const LEVELS = {
     critico: { bg: 'rgba(230,57,70,0.07)',   border: 'rgba(230,57,70,0.25)',   badge: 'badge-red',   icon: '🚨' },

@@ -1,7 +1,10 @@
 /**
- * App.jsx — componente raíz.
+ * @file App.jsx — Componente raiz de la aplicacion.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
  *
- * Máquina de estados simple:
+ * Maquina de estados simple:
  *   home ──► loading ──► dashboard
  *                 └──► error ──► home
  *

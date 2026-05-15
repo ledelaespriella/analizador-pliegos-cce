@@ -1,4 +1,9 @@
-/** PuntajesTab — barras de puntaje, tabla detallada y metodología. */
+/**
+ * @file PuntajesTab.jsx — Barras de puntaje, tabla detallada y metodologia.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ */
 import { CHART_COLORS } from '../../../utils/constants.js';
 
 export default function PuntajesTab({ data }) {

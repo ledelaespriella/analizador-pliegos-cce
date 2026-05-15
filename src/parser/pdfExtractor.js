@@ -1,7 +1,9 @@
 /**
- * pdfExtractor.js
- * ---------------
- * Extrae texto plano de un archivo PDF usando PDF.js (pdfjs-dist).
+ * @file pdfExtractor.js — Extrae texto plano de un PDF usando PDF.js.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
  * No depende de servicios externos ni IA; todo el procesamiento
  * ocurre en el navegador del usuario.
  *

@@ -1,6 +1,11 @@
 # Analizador de Pliegos CCE
 
-Herramienta web que analiza Pliegos de Condiciones de **Colombia Compra Eficiente (CCE)** directamente en el navegador, sin depender de IA externa ni enviar datos a ningún servidor.
+> Herramienta web que analiza Pliegos de Condiciones de **Colombia Compra Eficiente (CCE)** directamente en el navegador, sin depender de IA externa ni enviar datos a servidores.
+
+**Autor:** Luis de la Espriella ([@ledelaespriella](https://github.com/ledelaespriella))
+**Contacto:** luisdelaespriellaj@hotmail.com
+
+---
 
 ## Características
 
@@ -18,6 +23,10 @@ Herramienta web que analiza Pliegos de Condiciones de **Colombia Compra Eficient
 | pdfjs-dist 4 | Extracción de texto del PDF |
 | gh-pages | Despliegue en GitHub Pages |
 
+## Demo
+
+[https://ledelaespriella.github.io/analizador-pliegos-cce](https://ledelaespriella.github.io/analizador-pliegos-cce)
+
 ## Inicio rápido
 
 ```bash
@@ -30,9 +39,6 @@ npm run dev
 Abre `http://localhost:5173` en tu navegador.
 
 ## Despliegue en GitHub Pages
-
-1. Asegúrate de haber hecho `git remote add origin https://github.com/ledelaespriella/analizador-pliegos-cce.git`.
-2. Ejecuta:
 
 ```bash
 npm run deploy
@@ -69,7 +75,7 @@ src/
 │       └── tabs/             # Una pestaña por sección del dashboard
 └── utils/
     ├── constants.js          # Colores, tabs, pasos de carga
-    └── formatters.js         # fmtCOP, cleanText, parseMoneyString…
+    └── formatters.js         # fmtCOP, cleanText, parseMoneyString
 ```
 
 ## Limitaciones conocidas
@@ -78,10 +84,29 @@ src/
 - La precisión del parser depende de que el pliego siga la estructura de los **Pliegos Tipo CCE**. Documentos muy atípicos pueden requerir revisión manual.
 - Los valores de CTd y CRPC son **estimaciones** calculadas a partir del presupuesto y el plazo; verifique siempre con el pliego oficial en SECOP II.
 
+## Licencia
+
+Este software se distribuye bajo la **Business Source License 1.1 (BSL 1.1)**.
+
+| Aspecto | Detalle |
+|---------|---------|
+| **Uso personal / educativo** | Libre y gratuito |
+| **Uso comercial / producción** | Requiere licencia comercial del autor |
+| **Fecha de cambio** | 14 de mayo de 2031 (5 años) |
+| **Licencia posterior** | Apache License 2.0 |
+
+### Resumen
+
+- **Antes del 14/05/2031:** puede copiar, modificar y redistribuir el código para uso no comercial. El uso en producción o con fines comerciales (incluyendo ofrecer el software como servicio/SaaS) requiere una licencia comercial. Contacte a luisdelaespriellaj@hotmail.com.
+- **Después del 14/05/2031:** el código se convierte automáticamente a Apache License 2.0, permitiendo uso libre incluyendo comercial.
+
+Consulte el archivo [LICENSE](./LICENSE) para el texto legal completo.
+
 ## Contribuir
 
 Pull requests bienvenidos. Para cambios grandes, abre un issue primero para discutir el alcance.
+Al contribuir, aceptas que tus contribuciones se rigen bajo los mismos términos de la licencia BSL 1.1.
 
-## Licencia
+---
 
-MIT
+Desarrollado por [@ledelaespriella](https://github.com/ledelaespriella) | Colombia

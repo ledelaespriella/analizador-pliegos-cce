@@ -1,8 +1,10 @@
 /**
- * resumen.js
- * ----------
- * Extrae los datos generales del proceso a partir del texto del pliego.
- * Aplica múltiples patrones regex en orden de especificidad descendente;
+ * @file resumen.js — Extrae los datos generales del proceso del pliego.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
+ * Aplica multiples patrones regex en orden de especificidad descendente;
  * el primero que encuentre resultado gana.
  */
 

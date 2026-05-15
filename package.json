@@ -2,6 +2,12 @@
   "name": "analizador-pliegos-cce",
   "version": "1.0.0",
   "description": "Analizador de Pliegos de Condiciones CCE — Colombia Compra Eficiente",
+  "author": "Luis de la Espriella <luisdelaespriellaj@hotmail.com> (https://github.com/ledelaespriella)",
+  "license": "BUSL-1.1",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ledelaespriella/analizador-pliegos-cce.git"
+  },
   "type": "module",
   "scripts": {
     "dev": "vite",

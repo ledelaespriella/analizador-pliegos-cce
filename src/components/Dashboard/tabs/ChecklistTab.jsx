@@ -1,4 +1,9 @@
-/** ChecklistTab — lista completa de documentos a presentar. */
+/**
+ * @file ChecklistTab.jsx — Lista completa de documentos a presentar.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ */
 export default function ChecklistTab({ data }) {
   const list         = data.checklist ?? [];
   const criticos     = list.filter(c => c.critico).length;

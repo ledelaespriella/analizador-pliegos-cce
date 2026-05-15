@@ -1,6 +1,10 @@
 /**
- * Dashboard — contenedor principal post-análisis.
- * Gestiona las KPI cards, el selector de pestañas y el renderizado de cada tab.
+ * @file Dashboard/index.jsx — Contenedor principal post-analisis.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
+ * Gestiona las KPI cards, el selector de pestanas y el renderizado de cada tab.
  */
 import { useState } from 'react';
 import { TABS }     from '../../utils/constants.js';

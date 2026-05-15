@@ -1,8 +1,11 @@
 /**
- * parametros.js
- * -------------
- * Genera la lista de "Parámetros Clave para Licitar" y las alertas críticas
- * a partir de los datos ya extraídos del pliego.
+ * @file parametros.js — Genera parametros clave y alertas criticas.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
+ * Genera la lista de "Parametros Clave para Licitar" y las alertas criticas
+ * a partir de los datos ya extraidos del pliego.
  *
  * Cada parámetro tiene nivel: 'critico' | 'warning' | 'ok'
  */

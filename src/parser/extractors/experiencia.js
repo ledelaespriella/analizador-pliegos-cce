@@ -1,7 +1,10 @@
 /**
- * experiencia.js
- * --------------
- * Extrae los requisitos de experiencia general y específica del pliego.
+ * @file experiencia.js — Extrae requisitos de experiencia del pliego.
+ * @author Luis de la Espriella (@ledelaespriella)
+ * @license BSL-1.1 — See LICENSE file for details.
+ * @copyright 2026 Luis de la Espriella. All rights reserved.
+ *
+ * Extrae los requisitos de experiencia general y especifica del pliego.
  *
  * Los pliegos tipo CCE para obra pública presentan secciones como:
  *   "EXPERIENCIA GENERAL"  → actividades con código UNSPSC y valor mínimo
