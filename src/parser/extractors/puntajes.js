@@ -152,8 +152,10 @@ export function extractMetodologiaEvaluacion(text) {
     },
   ];
 
-  // Intentar detectar métodos de ponderación de oferta económica
-  const RE_METODO = /M[EÉ]TODO\s+(\d+)[:\s]+([^\n]{5,80})[^-]*TRM[:\s]+([0-9.,]+)\s*[-–]\s*([0-9.,]+)/gi;
+  // Intentar detectar métodos de ponderación de oferta económica.
+  // Limitamos a una sola línea con [^\n] para evitar que el cuantificador
+  // codicioso consuma varios "MÉTODO" y solo nos devuelva el último.
+  const RE_METODO = /M[EÉ]TODO\s+(\d+)[:\s]+([^\n]{5,80}?)\s+TRM[:\s]+([0-9.,]+)\s*[-–]\s*([0-9.,]+)/gi;
   const metodosPonderacion = [];
   let m;
   RE_METODO.lastIndex = 0;

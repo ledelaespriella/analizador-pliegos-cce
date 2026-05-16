@@ -7,13 +7,18 @@
 
 /**
  * Formatea un valor numérico o string a notación monetaria COP legible.
+ * Acepta tanto valores numéricos como cadenas en formato colombiano
+ * (1.500.000.000) o anglosajón (1,500,000,000).
  * @param {string|number} value
  * @returns {string}
  */
 export function fmtCOP(value) {
-  if (!value || value === 'No especificado en el pliego') return '—';
-  const n = parseFloat(String(value).replace(/[^0-9.]/g, ''));
-  if (isNaN(n)) return String(value);
+  if (value === null || value === undefined || value === '' ||
+      value === 'No especificado en el pliego') return '—';
+
+  const n = typeof value === 'number' ? value : parseMoneyString(String(value));
+  if (n === null || isNaN(n)) return String(value);
+
   if (n >= 1e9) return `$${(n / 1e9).toFixed(2)} MM COP`;
   if (n >= 1e6) return `$${(n / 1e6).toFixed(0)}M COP`;
   if (n >= 1e3) return `$${n.toLocaleString('es-CO')} COP`;
@@ -56,26 +61,39 @@ export function cleanText(text) {
 
 /**
  * Normaliza una cantidad monetaria extraída con regex a número.
- * Maneja formatos: 1.500.000.000 / 1,500,000,000 / 1500000000
+ * Maneja formatos: 1.500.000.000 / 1,500,000,000 / 1.500.000,75 / 1,500.75
  * @param {string} raw
  * @returns {number|null}
  */
 export function parseMoneyString(raw) {
-  if (!raw) return null;
+  if (raw === null || raw === undefined) return null;
   // Elimina todo excepto dígitos y separadores
-  const clean = raw.replace(/\s/g, '').replace(/[^0-9.,]/g, '');
-  if (!clean) return null;
+  const clean = String(raw).replace(/\s/g, '').replace(/[^0-9.,]/g, '');
+  if (!clean || !/\d/.test(clean)) return null;
 
-  // Si el último separador es coma → formato europeo/colombiano (1.500.000,00)
   const lastComma = clean.lastIndexOf(',');
   const lastDot   = clean.lastIndexOf('.');
-  if (lastComma > lastDot) {
-    return parseFloat(clean.replace(/\./g, '').replace(',', '.'));
-  }
-  // Si el último separador es punto con exactamente 2 decimales → decimal
-  if (lastDot !== -1 && clean.length - lastDot === 3 && lastComma === -1) {
+
+  // Si conviven ambos separadores → el último es el decimal, el otro es miles.
+  if (lastComma !== -1 && lastDot !== -1) {
+    if (lastComma > lastDot) {
+      // Formato colombiano/europeo: 1.500.000,75
+      return parseFloat(clean.replace(/\./g, '').replace(',', '.'));
+    }
+    // Formato anglosajón: 1,500,000.75
     return parseFloat(clean.replace(/,/g, ''));
   }
-  // Asumir separador de miles con punto
-  return parseFloat(clean.replace(/\./g, '').replace(',', '.'));
+
+  // Solo un tipo de separador o ninguno.
+  if (lastComma === -1 && lastDot === -1) return parseFloat(clean);
+
+  const sep = lastComma !== -1 ? ',' : '.';
+  const parts = clean.split(sep);
+
+  // Si hay un único separador con 1 o 2 dígitos a la derecha → decimal.
+  // Si hay 3 dígitos a la derecha → más probable separador de miles.
+  if (parts.length === 2 && parts[1].length <= 2) {
+    return parseFloat(parts.join('.'));
+  }
+  return parseFloat(clean.split(sep).join(''));
 }

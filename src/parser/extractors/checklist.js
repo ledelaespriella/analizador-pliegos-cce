@@ -124,7 +124,8 @@ export function buildChecklist(parsed) {
   }
 
   // ── ANTICIPO ──────────────────────────────────────────────────────────────
-  if (parsed.resumen?.anticipo && !/no especificado|0\s*%/i.test(parsed.resumen.anticipo)) {
+  // Importante: usar \b0 para no tratar "30%" como "0%" por coincidencia parcial.
+  if (parsed.resumen?.anticipo && !/no especificado|sin anticipo|no hay|\b0\s*%/i.test(parsed.resumen.anticipo)) {
     add('Garantía de Buen Manejo del Anticipo',
         'CONTRACTUAL',
         `Póliza por el 100% del valor del anticipo (${parsed.resumen.anticipo}). Se entrega al firmar el contrato.`,

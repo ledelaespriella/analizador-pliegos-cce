@@ -66,7 +66,7 @@ export function buildParametrosYAlertas(parsed) {
       parametro:   'Anticipo',
       valor:       r.anticipo,
       advertencia: 'Si hay anticipo, se debe constituir póliza de Buen Manejo por el 100% antes de la firma.',
-      nivel:       /0\s*%|sin anticipo|no hay/i.test(r.anticipo) ? 'ok' : 'warning',
+      nivel:       /\b0\s*%|sin anticipo|no hay/i.test(r.anticipo) ? 'ok' : 'warning',
     });
   }
 
