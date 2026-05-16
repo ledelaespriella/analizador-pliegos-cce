@@ -19,12 +19,28 @@ import ChecklistTab  from './tabs/ChecklistTab.jsx';
 import ParametrosTab from './tabs/ParametrosTab.jsx';
 
 export default function Dashboard({ data, onNew }) {
-  const [activeTab, setActiveTab] = useState('dashboard');
+  const [activeTab,   setActiveTab]   = useState('dashboard');
+  const [downloading, setDownloading] = useState(false);
 
   const d       = data;
   const r       = d.resumen ?? {};
   const ct      = d.capitalTrabajo ?? {};
   const totalPts = (d.puntajes ?? []).reduce((s, p) => s + (p.puntos ?? 0), 0);
+
+  const handleExport = async () => {
+    if (downloading) return;
+    setDownloading(true);
+    try {
+      // Lazy-load: exceljs es pesado (~700KB) y solo lo necesitamos al exportar.
+      const { exportToExcel } = await import('../../export/excelExport.js');
+      await exportToExcel(d);
+    } catch (err) {
+      console.error('[Dashboard] Error al exportar Excel:', err);
+      alert('No se pudo generar el Excel. Detalle en la consola.');
+    } finally {
+      setDownloading(false);
+    }
+  };
 
   return (
     <div className="dashboard fade-in">
@@ -36,6 +52,14 @@ export default function Dashboard({ data, onNew }) {
           <div className="dash-entity">{r.entidad}</div>
         </div>
         <div className="dash-actions">
+          <button
+            className="btn-primary"
+            onClick={handleExport}
+            disabled={downloading}
+            title="Descargar análisis completo en Excel"
+          >
+            {downloading ? '⏳ Generando…' : '📥 Descargar Excel'}
+          </button>
           <button className="btn-outline" onClick={onNew}>← Nuevo pliego</button>
         </div>
       </div>

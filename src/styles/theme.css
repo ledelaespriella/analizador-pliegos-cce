@@ -135,6 +135,7 @@ body {
   cursor: pointer; transition: all 0.2s;
 }
 .btn-primary:hover { background: var(--teal2); }
+.btn-primary:disabled { opacity: 0.6; cursor: wait; }
 
 /* ─── KPI CARDS ──────────────────────────────────────────────────────────────── */
 .kpi-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 28px; }

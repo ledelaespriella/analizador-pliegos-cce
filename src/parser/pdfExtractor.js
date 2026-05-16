@@ -15,12 +15,12 @@
  */
 
 import * as pdfjsLib from 'pdfjs-dist';
+import workerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
 
-// Apunta el worker al CDN de PDF.js para evitar problemas de bundling.
-// Se puede cambiar a un worker local si se prefiere modo offline:
-//   import workerUrl from 'pdfjs-dist/build/pdf.worker.mjs?url';
-//   pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
-pdfjsLib.GlobalWorkerOptions.workerSrc = `https://cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjsLib.version}/pdf.worker.min.mjs`;
+// Worker servido localmente desde el bundle. Esto preserva la promesa
+// "100% local — sin enviar datos a servidores externos": ni siquiera el
+// worker de PDF.js se descarga de una CDN.
+pdfjsLib.GlobalWorkerOptions.workerSrc = workerUrl;
 
 /**
  * Extrae todo el texto de un archivo PDF.
@@ -83,25 +83,40 @@ export async function extractTextFromPDF(file, onProgress) {
  * @param {Array<object>} items
  * @returns {string}
  */
+// Conjunto de fragmentos cortos (1–3 letras) que SON palabras reales en español
+// y por tanto no deben pegarse al token anterior. Lista deliberadamente conservadora:
+// preposiciones, conjunciones, artículos, pronombres y verbos copulativos breves.
+const REAL_SHORT_WORDS = new Set([
+  'a','y','o','u','e','i',
+  'al','el','la','lo','las','los','un','una','su','sus','mi','tu','le','les','me','te','se','si','no','ni','de','en','es','un',
+  'por','con','sin','del','los','las','que','las','las','los','des','sub',
+  'son','fue','han','hay','sea','ser','muy','más','aún','ya','tal','tan','así','dos','tres','uno','dia','día','año','año',
+]);
+
 /**
- * Repara palabras que PDF.js separa con espacios espurios
- * (e.g. "correspond ientes" → "correspondientes", "202 5" → "2025").
+ * Repara palabras que PDF.js separa con espacios espurios al renderizar PDFs
+ * con tracking/kerning irregular (p.ej. "correspond ientes" → "correspondientes",
+ * "202 5" → "2025"). Es conservadora: no une un fragmento si éste es una
+ * palabra real corta del español (de, en, el, la, los, …) o si el token previo
+ * termina en una sílaba completa razonable.
  */
 function rejoinSplitWords(text) {
-  return text
-    // Letra + espacio + letra minúscula dentro de una palabra: "correspond ientes" → "correspondientes"
-    .replace(/([a-záéíóúüñ]) ([a-záéíóúüñ]{1,3}) /gi, (m, a, b) => {
-      // Only rejoin if the fragment is ≤3 chars (likely a split, not two real words)
-      return a + b + ' ';
-    })
-    // Dígitos separados por espacio: "202 5" → "2025", "48 .485" → "48.485"
+  // 1) Dígitos: "202 5" → "2025" y "48 .485" → "48.485". Sin riesgo léxico.
+  let out = text
     .replace(/(\d) (\d)/g, '$1$2')
-    // Número + espacio + punto/coma + dígitos: "48 .485" → "48.485"
-    .replace(/(\d) ([.,]\d)/g, '$1$2')
-    // Letras espaciadas tipo header: "P á g i n a" queda tal cual (demasiado corto cada fragmento)
-    // "d u r ac i ón" → intentar rejoin de letras sueltas separadas por espacios
-    .replace(/\b([a-záéíóúüñ]) ([a-záéíóúüñ]) ([a-záéíóúüñ]) /gi, '$1$2$3 ')
-    .replace(/\b([a-záéíóúüñ]) ([a-záéíóúüñ]) /gi, '$1$2 ');
+    .replace(/(\d) ([.,]\d)/g, '$1$2');
+
+  // 2) Letra + espacio + 1–3 letras minúsculas + espacio: posible split.
+  //    Solo pegamos cuando el fragmento NO es una palabra real corta.
+  out = out.replace(
+    /([a-záéíóúüñ]{3,}) ([a-záéíóúüñ]{1,3})(?=[\s.,;:!?)\]"'-])/gi,
+    (match, prev, frag) => {
+      if (REAL_SHORT_WORDS.has(frag.toLowerCase())) return match;
+      return prev + frag;
+    },
+  );
+
+  return out;
 }
 
 function buildPageText(items) {

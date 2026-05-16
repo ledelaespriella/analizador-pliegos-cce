@@ -141,11 +141,14 @@ export function extractCapitalTrabajo(text, presupuestoRaw) {
   const antiMatch = /ANTICIPO[^\n]*?(\d{1,2})\s*%/i.exec(text);
   const anticipoPct = antiMatch ? parseInt(antiMatch[1]) / 100 : 0;
 
-  // Calculate CTd
+  // Calculate CTd: si el pliego trae el valor explícito → "extraido";
+  // si lo derivamos del presupuesto, plazo y tabla CCE → "estimado".
   let ctdEstimado = null;
+  let ctdEsEstimado = true;
   const valorMatch = RE_CT_VALOR.exec(section);
   if (valorMatch) {
     ctdEstimado = parseMoneyString(valorMatch[1]);
+    if (ctdEstimado) ctdEsEstimado = false;
   }
 
   if (!ctdEstimado && presup) {
@@ -175,6 +178,7 @@ export function extractCapitalTrabajo(text, presupuestoRaw) {
     plazoEjecucion:      plazo ? `${plazo} meses` : NIL,
     mesesApalancamiento: meses ?? NIL,
     ctdEstimado:         ctdEstimado ? String(Math.round(ctdEstimado)) : NIL,
+    ctdEsEstimado,
     patrimonioDemandado,
     condicion:           'CT ≥ CTd',
     notas:               (pctMatch && plazo && plazo < 12) ? `Fórmula corta para plazo < 12 meses: CTd = (POE - Anticipo) × ${pctMatch[1]}%` : '',
@@ -203,12 +207,20 @@ export function extractCapacidadResidual(text, presupuestoRaw) {
   const formulaMatch = RE_CRP_FORMULA.exec(section);
 
   const presup = presupuestoRaw ? parseMoneyString(presupuestoRaw) : null;
-  const crpcEstimado = crpcMatch
-    ? parseMoneyString(crpcMatch[1])?.toString()
-    : presup ? String(Math.round(presup)) : NIL;
+  let crpcEstimado;
+  let crpcEsEstimado = false;
+  if (crpcMatch) {
+    crpcEstimado = parseMoneyString(crpcMatch[1])?.toString();
+  } else if (presup) {
+    crpcEstimado = String(Math.round(presup));
+    crpcEsEstimado = true;
+  } else {
+    crpcEstimado = NIL;
+  }
 
   return {
     crpcEstimado,
+    crpcEsEstimado,
     formulaCRPC:  formulaMatch?.[1]?.trim() ?? 'CRP ≥ Presupuesto Oficial del Proceso',
     formulaCRP:   'CRP = CO × [(E + CT + CF) / 100] – SCE',
     factores:     FACTORES_STD,

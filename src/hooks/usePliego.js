@@ -18,24 +18,57 @@
  *  - resetToHome  : vuelve a la pantalla inicial
  */
 
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useEffect } from 'react';
 import { extractTextFromPDF }    from '../parser/pdfExtractor.js';
 import { parsePliego }           from '../parser/pliegoParser.js';
 import { ANALYSIS_STEPS }        from '../utils/constants.js';
 
+const HISTORY_KEY = 'pliego-cce.history.v1';
+const HISTORY_MAX = 10;
+
+function loadHistory() {
+  try {
+    const raw = localStorage.getItem(HISTORY_KEY);
+    if (!raw) return [];
+    const parsed = JSON.parse(raw);
+    return Array.isArray(parsed) ? parsed : [];
+  } catch {
+    return [];
+  }
+}
+
+function saveHistory(items) {
+  try {
+    localStorage.setItem(HISTORY_KEY, JSON.stringify(items));
+  } catch {
+    // Cuota llena o storage deshabilitado: ignoramos silenciosamente.
+  }
+}
+
+function isPdfFile(file) {
+  if (!file) return false;
+  if (file.type === 'application/pdf') return true;
+  // Algunos navegadores (o drag&drop desde ciertos clientes) no setean el MIME.
+  return typeof file.name === 'string' && /\.pdf$/i.test(file.name);
+}
+
 export function usePliego() {
   const [state,       setState]       = useState('home');
   const [data,        setData]        = useState(null);
-  const [history,     setHistory]     = useState([]);
+  const [history,     setHistory]     = useState(() => loadHistory());
   const [loadingStep, setLoadingStep] = useState(0);
   const [error,       setError]       = useState('');
+
+  useEffect(() => {
+    saveHistory(history);
+  }, [history]);
 
   /**
    * Inicia el análisis de un archivo PDF.
    * @param {File} file
    */
   const processFile = useCallback(async (file) => {
-    if (!file || file.type !== 'application/pdf') {
+    if (!isPdfFile(file)) {
       setError('El archivo debe ser un PDF válido.');
       setState('error');
       return;
@@ -71,7 +104,7 @@ export function usePliego() {
       setLoadingStep(ANALYSIS_STEPS.length - 1);
       setData(parsed);
 
-      // Guardar en historial de sesión (máximo 10)
+      // Persistir en historial (máximo HISTORY_MAX, persistido en localStorage)
       setHistory(prev => [{
         id:          Date.now(),
         name:        file.name,
@@ -79,7 +112,7 @@ export function usePliego() {
         entidad:     parsed.resumen?.entidad    ?? '—',
         presupuesto: parsed.resumen?.presupuesto ?? '—',
         data:        parsed,
-      }, ...prev.slice(0, 9)]);
+      }, ...prev.slice(0, HISTORY_MAX - 1)]);
 
       setState('dashboard');
 

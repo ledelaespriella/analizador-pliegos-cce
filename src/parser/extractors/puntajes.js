@@ -104,7 +104,8 @@ export function extractPuntajes(text) {
 
     // Buscar el puntaje en los 200 caracteres siguientes al match
     const fragment = section.slice(idx, idx + 200);
-    const puntos = extractPuntos(fragment) ?? criterio.puntosDefault;
+    const puntosExtraido = extractPuntos(fragment);
+    const puntos = puntosExtraido ?? criterio.puntosDefault;
 
     resultados.push({
       criterio:    criterio.nombre,
@@ -112,10 +113,13 @@ export function extractPuntajes(text) {
       descripcion: criterio.descripcion,
       documentos:  criterio.documentos,
       color:       criterio.color,
+      // true cuando el valor proviene del template y NO del pliego analizado
+      esValorPorDefecto: puntosExtraido === null,
     });
   }
 
   // Si no se encontraron puntajes, devolver valores típicos para licitación pública CCE
+  // (marcados explícitamente como defaults para no inducir a engaño en el dashboard)
   if (!resultados.length) {
     return CRITERIOS_STD.map(c => ({
       criterio:    c.nombre,
@@ -123,6 +127,7 @@ export function extractPuntajes(text) {
       descripcion: c.descripcion,
       documentos:  c.documentos,
       color:       c.color,
+      esValorPorDefecto: true,
     }));
   }
 

@@ -22,7 +22,8 @@ export default defineConfig({
     rollupOptions: {
       output: {
         manualChunks: {
-          pdfjs: ['pdfjs-dist'],
+          pdfjs:   ['pdfjs-dist'],
+          exceljs: ['exceljs'],
         },
       },
     },
